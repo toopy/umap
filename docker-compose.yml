@@ -1,0 +1,25 @@
+---
+version: "3"
+services:
+  postgis:
+    image: postgis/postgis
+    environment:
+      POSTGRES_DB: umap
+      POSTGRES_PASSWORD: abc
+      POSTGRES_USER: umap
+
+  redis:
+    image: redis
+
+  umap:
+    image: toopy/umap
+    environment:
+      MEDIA_ROOT: /srv/umap/var/data
+      POSTGRES_HOST: postgis
+      REDIS_URL: redis://redis:6379/0
+      STATIC_ROOT: /srv/umap/var/static
+    volumes:
+      - umap-data:/srv/umap/var/data
+
+volumes:
+  umap-data:
